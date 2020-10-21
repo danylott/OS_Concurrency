@@ -3,6 +3,8 @@
 
 *.hprof
 
+.vscode
+
 # Created by https://www.toptal.com/developers/gitignore/api/vscode,gradle,java,intellij,eclipse
 # Edit at https://www.toptal.com/developers/gitignore?templates=vscode,gradle,java,intellij,eclipse
 

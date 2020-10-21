@@ -47,7 +47,7 @@ public abstract class AbstractFixnumLock implements FixnumLock {
     public int register(Thread thread) {
         int freePos = -1;
         for (int i = 0; i < registered.length; i++) {
-            if (registered[i] == null) {
+            if ((freePos == -1) && (registered[i] == null)) {
                 freePos = i;
             }
             if (registered[i] == thread) {
