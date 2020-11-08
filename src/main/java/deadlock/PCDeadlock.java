@@ -8,7 +8,7 @@ public class PCDeadlock {
     {
         final PC pc = new PC();
 
-        Thread t1 = new Thread(new Runnable() {
+        Thread producerThread = new Thread(new Runnable() {
             @Override
             public void run()
             {
@@ -21,7 +21,7 @@ public class PCDeadlock {
             }
         });
 
-        Thread t2 = new Thread(new Runnable() {
+        Thread consumerThread = new Thread(new Runnable() {
             @Override
             public void run()
             {
@@ -34,18 +34,18 @@ public class PCDeadlock {
             }
         });
 
-        t1.start();
-        t2.start();
+        producerThread.start();
+        consumerThread.start();
 
-        t1.join();
-        t2.join();
+        producerThread.join();
+        consumerThread.join();
     }
 
     public static class PC {
         static private boolean isFirstStep = true;
 
         LinkedList<Integer> list = new LinkedList<>();
-        int capacity = 5;
+        final static int capacity = 5;
 
         public void produce() throws InterruptedException
         {
@@ -57,8 +57,7 @@ public class PCDeadlock {
                     if (list.size() >= capacity)
                         wait();
 
-                    System.out.println("Producer produced-"
-                            + value);
+                    System.out.println("Producer produced-" + value);
 
                     list.add(value++);
 
@@ -95,8 +94,7 @@ public class PCDeadlock {
 
                     int val = list.removeFirst();
 
-                    System.out.println("Consumer consumed-"
-                            + val);
+                    System.out.println("Consumer consumed-" + val);
 
                     if(list.size() == capacity - 1)
                         notify();
